@@ -7,7 +7,7 @@ import static java.util.Arrays.asList;
 public class SimpleSensorEventHandlerFactory implements SensorEventHandlerFactory {
     @Override
     public SensorEventHandler create() {
-        return new SensorEventHanderComposite(asList(
+        return new SensorEventHandlerComposite(asList(
                 new LightSensorEventHandler()
                 , new DoorSensorEventHandler()
                 , new CloseHallDoorSensorEventHandler()

@@ -6,10 +6,10 @@ import ru.sbt.mipt.oop.event.SensorEventType;
 
 import java.util.List;
 
-public class SensorEventHanderComposite implements SensorEventHandler {
+public class SensorEventHandlerComposite implements SensorEventHandler {
     private final List<SensorEventHandler> eventHandlerList;
 
-    public SensorEventHanderComposite(List<SensorEventHandler> eventHandlerList) {
+    public SensorEventHandlerComposite(List<SensorEventHandler> eventHandlerList) {
         this.eventHandlerList = eventHandlerList;
     }
 

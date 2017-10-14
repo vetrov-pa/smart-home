@@ -11,13 +11,11 @@ import ru.sbt.mipt.oop.factory.SmartHomeFactory;
 
 import java.io.IOException;
 
-import static java.util.Arrays.asList;
-
 public class Application {
     public static void main(String... args) throws IOException {
         // считываем состояние дома из файла
         SmartHomeFactory smartHomeFactory = new GsonSmartHomeFactory();
-        SmartHome smartHome = smartHomeFactory.build();
+        SmartHome smartHome = smartHomeFactory.create();
 
         // регистрируем обработчики событий
         SensorEventHandlerFactory eventHandlerFactory = new SimpleSensorEventHandlerFactory();

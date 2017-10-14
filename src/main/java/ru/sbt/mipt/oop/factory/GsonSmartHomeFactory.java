@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 
 public class GsonSmartHomeFactory implements SmartHomeFactory {
     @Override
-    public SmartHome build() throws IOException {
+    public SmartHome create() throws IOException {
         Gson gson = new Gson();
         String json = new String(Files.readAllBytes(Paths.get("smart-home-1.js")));
 

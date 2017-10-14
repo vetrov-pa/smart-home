@@ -7,12 +7,16 @@ import ru.sbt.mipt.oop.domain.SmartHome;
 import ru.sbt.mipt.oop.domain.service.SmartHomeService;
 import ru.sbt.mipt.oop.event.SensorEvent;
 import ru.sbt.mipt.oop.event.SensorEventType;
-import ru.sbt.mipt.oop.event.handler.state.LightOffState;
-import ru.sbt.mipt.oop.event.handler.state.LightState;
+import ru.sbt.mipt.oop.event.handler.command.light.LightCommand;
+import ru.sbt.mipt.oop.event.handler.command.factory.SmartHomeCommandFactory;
+import ru.sbt.mipt.oop.event.handler.command.factory.SmartHomeCommandFactoryImpl;
 
 import static ru.sbt.mipt.oop.event.SensorEventType.DOOR_CLOSED;
+import static ru.sbt.mipt.oop.event.SensorEventType.LIGHT_OFF;
 
 public class CloseHallDoorSensorEventHandler implements SensorEventHandler {
+    private final SmartHomeCommandFactory homeCommandFactory = SmartHomeCommandFactoryImpl.getInstance();
+
     @Override
     public boolean isSupported(SensorEventType sensorEventType) {
         return sensorEventType == DOOR_CLOSED;
@@ -33,8 +37,8 @@ public class CloseHallDoorSensorEventHandler implements SensorEventHandler {
 
         for (Room homeRoom : smartHome.getRooms()) {
             for (Light light : homeRoom.getLights()) {
-                LightState lightState = new LightOffState();
-                lightState.apply(smartHome, light);
+                LightCommand lightCommand = homeCommandFactory.createLightCommand(LIGHT_OFF);
+                lightCommand.execute(smartHome, light);
             }
         }
     }

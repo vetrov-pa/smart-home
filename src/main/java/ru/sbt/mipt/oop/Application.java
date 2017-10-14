@@ -13,15 +13,12 @@ import java.io.IOException;
 
 public class Application {
     public static void main(String... args) throws IOException {
-        // считываем состояние дома из файла
         SmartHomeFactory smartHomeFactory = new GsonSmartHomeFactory();
         SmartHome smartHome = smartHomeFactory.create();
 
-        // регистрируем обработчики событий
         SensorEventHandlerFactory eventHandlerFactory = new SimpleSensorEventHandlerFactory();
         SensorEventHandler sensorEventHandler = eventHandlerFactory.create();
 
-        // начинаем цикл обработки событий
         SensorEventIterator sensorEventIterator = new SensorEventIterator();
         while (sensorEventIterator.hasNext()) {
             SensorEvent event = sensorEventIterator.next();

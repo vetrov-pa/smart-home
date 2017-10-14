@@ -5,14 +5,16 @@ import ru.sbt.mipt.oop.domain.SmartHome;
 import ru.sbt.mipt.oop.domain.service.SmartHomeService;
 import ru.sbt.mipt.oop.event.SensorEvent;
 import ru.sbt.mipt.oop.event.SensorEventType;
-import ru.sbt.mipt.oop.event.handler.state.LightState;
-import ru.sbt.mipt.oop.event.handler.state.LightOffState;
-import ru.sbt.mipt.oop.event.handler.state.LightOnState;
+import ru.sbt.mipt.oop.event.handler.command.light.LightCommand;
+import ru.sbt.mipt.oop.event.handler.command.factory.SmartHomeCommandFactory;
+import ru.sbt.mipt.oop.event.handler.command.factory.SmartHomeCommandFactoryImpl;
 
 import static ru.sbt.mipt.oop.event.SensorEventType.LIGHT_OFF;
 import static ru.sbt.mipt.oop.event.SensorEventType.LIGHT_ON;
 
 public class LightSensorEventHandler implements SensorEventHandler {
+    private final SmartHomeCommandFactory homeCommandFactory = SmartHomeCommandFactoryImpl.getInstance();
+
     @Override
     public boolean isSupported(SensorEventType sensorEventType) {
         return sensorEventType == LIGHT_ON || sensorEventType == LIGHT_OFF;
@@ -20,25 +22,14 @@ public class LightSensorEventHandler implements SensorEventHandler {
 
     @Override
     public void handle(SmartHome smartHome, SensorEvent sensorEvent) {
-        // событие от источника света
         String lightId = sensorEvent.getObjectId();
         Light light = SmartHomeService.getLight(smartHome, lightId);
         if (light == null) {
             throw new IllegalArgumentException("Light " + lightId + " not found");
         }
 
-        SensorEventType sensorEventType = sensorEvent.getType();
-        LightState lightState = null;
-        if (sensorEventType == LIGHT_ON) {
-            lightState = new LightOnState();
-        } else if (sensorEventType == LIGHT_OFF) {
-            lightState = new LightOffState();
-        }
+        LightCommand lightCommand = homeCommandFactory.createLightCommand(sensorEvent.getType());
 
-        if (lightState == null) {
-            throw new IllegalStateException("Invalid Light state " + sensorEventType.name());
-        }
-
-        lightState.apply(smartHome, light);
+        lightCommand.execute(smartHome, light);
     }
 }

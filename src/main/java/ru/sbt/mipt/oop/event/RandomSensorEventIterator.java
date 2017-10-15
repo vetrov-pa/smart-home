@@ -2,7 +2,7 @@ package ru.sbt.mipt.oop.event;
 
 import java.util.Iterator;
 
-public class SensorEventIterator implements Iterator<SensorEvent> {
+public class RandomSensorEventIterator implements Iterator<SensorEvent> {
     @Override
     public boolean hasNext() {
         return Math.random() >= 0.05;

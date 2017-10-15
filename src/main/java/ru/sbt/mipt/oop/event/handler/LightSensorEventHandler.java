@@ -22,11 +22,7 @@ public class LightSensorEventHandler implements SensorEventHandler {
 
     @Override
     public void handle(SmartHome smartHome, SensorEvent sensorEvent) {
-        String lightId = sensorEvent.getObjectId();
-        Light light = SmartHomeService.getLight(smartHome, lightId);
-        if (light == null) {
-            throw new IllegalArgumentException("Light " + lightId + " not found");
-        }
+        Light light = SmartHomeService.getLight(smartHome, sensorEvent.getObjectId());
 
         LightCommand lightCommand = homeCommandFactory.createLightCommand(sensorEvent.getType());
 

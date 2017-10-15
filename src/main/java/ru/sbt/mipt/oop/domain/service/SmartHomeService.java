@@ -14,43 +14,27 @@ public class SmartHomeService {
             if (door != null) break;
         }
 
+        if (door == null) {
+            throw new IllegalArgumentException("Door " + doorId + " not found");
+        }
+
         return door;
     }
 
-    public static Light getLight(SmartHome smartHome, String lightId) {
-        Light light = null;
-        for (Room room : smartHome.getRooms()) {
-            light = getLight(room, lightId);
-
-            if (light != null) break;
-        }
-
-        return light;
-    }
-
-    public static Room getLightRoom(SmartHome smartHome, String lightId) {
+    public static Room getDoorRoom(SmartHome smartHome, String doorId) {
         Room targetRoom = null;
         for (Room room : smartHome.getRooms()) {
-            if (getLight(room, lightId) != null){
+            if (getDoor(room, doorId) != null){
                 targetRoom = room;
                 break;
             }
         }
 
-        return targetRoom;
-    }
-
-    private static Light getLight(Room room, String lightId) {
-        Light targetLight = null;
-
-        for (Light light : room.getLights()) {
-            if (light.getId().equals(lightId)) {
-                targetLight = light;
-                break;
-            }
+        if (targetRoom == null) {
+            throw new IllegalArgumentException("Room for door " + doorId + " not found");
         }
 
-        return targetLight;
+        return targetRoom;
     }
 
     private static Door getDoor(Room room, String doorId) {
@@ -66,13 +50,45 @@ public class SmartHomeService {
         return targetDoor;
     }
 
-    public static Room getDoorRoom(SmartHome smartHome, String doorId) {
+    public static Light getLight(SmartHome smartHome, String lightId) {
+        Light light = null;
+        for (Room room : smartHome.getRooms()) {
+            light = getLight(room, lightId);
+
+            if (light != null) break;
+        }
+
+        if (light == null) {
+            throw new IllegalArgumentException("Light " + lightId + " not found");
+        }
+
+        return light;
+    }
+
+    private static Light getLight(Room room, String lightId) {
+        Light targetLight = null;
+
+        for (Light light : room.getLights()) {
+            if (light.getId().equals(lightId)) {
+                targetLight = light;
+                break;
+            }
+        }
+
+        return targetLight;
+    }
+
+    public static Room getLightRoom(SmartHome smartHome, String lightId) {
         Room targetRoom = null;
         for (Room room : smartHome.getRooms()) {
-            if (getDoor(room, doorId) != null){
+            if (getLight(room, lightId) != null){
                 targetRoom = room;
                 break;
             }
+        }
+
+        if (targetRoom == null) {
+            throw new IllegalArgumentException("Room for light " + lightId + " not found");
         }
 
         return targetRoom;

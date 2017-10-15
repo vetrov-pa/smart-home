@@ -22,12 +22,7 @@ public class DoorSensorEventHandler implements SensorEventHandler {
 
     @Override
     public void handle(SmartHome smartHome, SensorEvent sensorEvent) {
-        String doorId = sensorEvent.getObjectId();
-
-        Door door = SmartHomeService.getDoor(smartHome, doorId);
-        if (door == null) {
-            throw new IllegalArgumentException("Door " + doorId + " not found");
-        }
+        Door door = SmartHomeService.getDoor(smartHome, sensorEvent.getObjectId());
 
         DoorCommand doorCommand = homeCommandFactory.createDoorCommand(sensorEvent.getType());
 

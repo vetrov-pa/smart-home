@@ -21,7 +21,7 @@ public class SensorEventHandlerComposite implements SensorEventHandler {
                     try {
                         handler.handle(smartHome, sensorEvent);
                     } catch (Exception ex) {
-                        System.out.println(ex.getMessage());
+                        System.out.println("error: " + ex.getMessage());
                     }
                 });
     }

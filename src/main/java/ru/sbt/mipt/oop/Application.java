@@ -3,7 +3,6 @@ package ru.sbt.mipt.oop;
 import ru.sbt.mipt.oop.domain.SmartHome;
 import ru.sbt.mipt.oop.event.RandomSensorEventIterator;
 import ru.sbt.mipt.oop.event.SensorEvent;
-import ru.sbt.mipt.oop.event.SensorEventType;
 import ru.sbt.mipt.oop.event.handler.*;
 import ru.sbt.mipt.oop.factory.GsonSmartHomeFactory;
 import ru.sbt.mipt.oop.factory.SmartHomeFactory;

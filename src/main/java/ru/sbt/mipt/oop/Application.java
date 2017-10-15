@@ -17,7 +17,7 @@ public class Application {
 
         Iterator<SensorEvent> randomSensorEventIterator = new RandomSensorEventIterator();
 
-        SmartHomeEventHandler smartHomeEventHandler = new SmartHomeEventHandlerImpl();
-        smartHomeEventHandler.handle(smartHome, randomSensorEventIterator);
+        SmartHomeEventHandler smartHomeEventHandler = new IterableSmartHomeEventHandler(randomSensorEventIterator);
+        smartHomeEventHandler.handle(smartHome);
     }
 }
